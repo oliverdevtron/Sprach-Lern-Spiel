@@ -1,3 +1,11 @@
+# Sprach-Lern-Spiel v1.0
+# designed by:
+#   ██████  ██       ██  ██    ██ ███████ ██████  
+#  ██    ██ ██       ██  ██    ██ ██      ██   ██ 
+#  ██    ██ ██       ██  ██    ██ █████   ██████  
+#  ██    ██ ██       ██   ██  ██  ██      ██   ██ 
+#   ██████  ███████  ██    ████   ███████ ██   ██ 
+# (c) 2025 by oliver@devtron.pro
 import tkinter as tk
 from tkinter import messagebox
 from random import choice
