@@ -41,7 +41,12 @@ words_en_de = {
     "Whale": "Wal",
     "Xylophone": "Xylophon",
     "Yacht": "Yacht",
-    "Zebra": "Zebra"
+    "Zebra": "Zebra",
+    "Plane": "Flugzeug",
+    "Robot": "Roboter",
+    "School": "Schule",
+    "Tiger": "Tiger",
+    "Universe": "Universum"
 }
 
 words_es_de = {
@@ -70,7 +75,12 @@ words_es_de = {
     "Ballena": "Wal",
     "Xilófono": "Xylophon",
     "Yate": "Yacht",
-    "Cebra": "Zebra"
+    "Cebra": "Zebra",
+    "Avión": "Flugzeug",
+    "Robot": "Roboter",
+    "Escuela": "Schule",
+    "Tigre": "Tiger",
+    "Universo": "Universum"
 }
 
 class LanguageLearningApp:
@@ -78,6 +88,7 @@ class LanguageLearningApp:
         self.root = root
         self.root.title("Sprach-Lernsoftware")
         self.root.geometry("600x600")
+        self.root.configure(bg="lightyellow")
         self.current_word = None
         self.score = 0
         self.correct_answers = 0
@@ -85,17 +96,43 @@ class LanguageLearningApp:
         self.language = None
         self.words = None
         self.rewards = []
+        self.funny_messages = [
+            "Super gemacht!",
+            "Bärenstark!",
+            "Du rockst!",
+            "Fantastisch!",
+            "Mega gut!",
+        ]
+        self.unused_words = []
 
         self.create_language_selection()
 
     def create_language_selection(self):
-        self.language_label = tk.Label(self.root, text="Wähle die Sprache, die du lernen möchtest:", font=("Comic Sans MS", 18), fg="blue")
+        self.language_label = tk.Label(
+            self.root,
+            text="Wähle die Sprache, die du lernen möchtest:",
+            font=("Comic Sans MS", 18),
+            fg="blue",
+            bg="lightyellow",
+        )
         self.language_label.pack(pady=20)
 
-        self.english_button = tk.Button(self.root, text="Englisch", command=self.select_english, font=("Comic Sans MS", 18), bg="yellow")
+        self.english_button = tk.Button(
+            self.root,
+            text="Englisch",
+            command=self.select_english,
+            font=("Comic Sans MS", 18),
+            bg="yellow",
+        )
         self.english_button.pack(pady=10)
 
-        self.spanish_button = tk.Button(self.root, text="Spanisch", command=self.select_spanish, font=("Comic Sans MS", 18), bg="yellow")
+        self.spanish_button = tk.Button(
+            self.root,
+            text="Spanisch",
+            command=self.select_spanish,
+            font=("Comic Sans MS", 18),
+            bg="yellow",
+        )
         self.spanish_button.pack(pady=10)
 
     def select_english(self):
@@ -117,34 +154,92 @@ class LanguageLearningApp:
         self.next_word()
 
     def create_widgets(self):
-        self.label = tk.Label(self.root, text=f"Lerne {self.language}!", font=("Comic Sans MS", 24), fg="green")
+        self.label = tk.Label(
+            self.root,
+            text=f"Lerne {self.language}!",
+            font=("Comic Sans MS", 24),
+            fg="green",
+            bg="lightyellow",
+        )
         self.label.pack(pady=20)
 
-        self.word_label = tk.Label(self.root, text="", font=("Comic Sans MS", 18), fg="black")
+        self.word_label = tk.Label(
+            self.root,
+            text="",
+            font=("Comic Sans MS", 18),
+            fg="black",
+            bg="lightyellow",
+        )
         self.word_label.pack(pady=10)
 
         self.entry = tk.Entry(self.root, font=("Comic Sans MS", 18))
         self.entry.pack(pady=10)
 
-        self.check_button = tk.Button(self.root, text="Prüfen", command=self.check_answer, font=("Comic Sans MS", 18), bg="cyan")
+        self.check_button = tk.Button(
+            self.root,
+            text="Prüfen",
+            command=self.check_answer,
+            font=("Comic Sans MS", 18),
+            bg="cyan",
+        )
         self.check_button.pack(pady=10)
 
-        self.score_label = tk.Label(self.root, text="Punktzahl: 0", font=("Comic Sans MS", 18), fg="blue")
+        self.hint_button = tk.Button(
+            self.root,
+            text="Tipp",
+            command=self.show_hint,
+            font=("Comic Sans MS", 18),
+            bg="orange",
+        )
+        self.hint_button.pack(pady=10)
+
+        self.score_label = tk.Label(
+            self.root,
+            text="Punktzahl: 0",
+            font=("Comic Sans MS", 18),
+            fg="blue",
+            bg="lightyellow",
+        )
         self.score_label.pack(pady=20)
 
-        self.stats_label = tk.Label(self.root, text="Richtige Antworten: 0 | Falsche Antworten: 0", font=("Comic Sans MS", 18), fg="blue")
+        self.stats_label = tk.Label(
+            self.root,
+            text="Richtige Antworten: 0 | Falsche Antworten: 0",
+            font=("Comic Sans MS", 18),
+            fg="blue",
+            bg="lightyellow",
+        )
         self.stats_label.pack(pady=10)
 
-        self.reward_label = tk.Label(self.root, text="Belohnungen: Keine", font=("Comic Sans MS", 18), fg="green")
+        self.reward_label = tk.Label(
+            self.root,
+            text="Belohnungen: Keine",
+            font=("Comic Sans MS", 18),
+            fg="green",
+            bg="lightyellow",
+        )
         self.reward_label.pack(pady=10)
 
-        self.next_button = tk.Button(self.root, text="Nächstes Wort", command=self.next_word, font=("Comic Sans MS", 18), bg="yellow")
+        self.next_button = tk.Button(
+            self.root,
+            text="Nächstes Wort",
+            command=self.next_word,
+            font=("Comic Sans MS", 18),
+            bg="yellow",
+        )
         self.next_button.pack(pady=10)
 
     def next_word(self):
-        self.current_word = choice(list(self.words.keys()))
+        if not self.unused_words:
+            self.unused_words = list(self.words.keys())
+        self.current_word = choice(self.unused_words)
+        self.unused_words.remove(self.current_word)
         self.word_label.config(text=self.current_word)
         self.entry.delete(0, tk.END)
+
+    def show_hint(self):
+        translation = self.words[self.current_word]
+        messagebox.showinfo("Tipp", f"Das Wort beginnt mit: {translation[0]}...")
 
     def play_sound(self, sound_file):
         pygame.mixer.music.load(sound_file)
@@ -156,12 +251,15 @@ class LanguageLearningApp:
             self.play_sound('correct_sound.mp3')
             self.score += 1
             self.correct_answers += 1
-            messagebox.showinfo("Richtig!", "Das ist korrekt!")
+            messagebox.showinfo("Richtig!", choice(self.funny_messages))
             self.check_rewards()
         else:
             self.play_sound('wrong_sound.mp3')
             self.wrong_answers += 1
-            messagebox.showinfo("Falsch", f"Das ist nicht korrekt. Die richtige Antwort ist: {self.words[self.current_word]}")
+            messagebox.showinfo(
+                "Falsch",
+                f"Das ist nicht korrekt. Die richtige Antwort ist: {self.words[self.current_word]}",
+            )
         self.update_score()
         self.next_word()
 
